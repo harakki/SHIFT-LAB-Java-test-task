@@ -5,6 +5,8 @@ import dev.harakki.shiftlab.dto.PeriodBestSellerDto;
 import dev.harakki.shiftlab.dto.SellerSummaryResponseDto;
 import dev.harakki.shiftlab.service.AnalyticsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,15 +29,16 @@ public class AnalyticsController {
 
     // Получить список продавцов с суммой меньше указанной
     @GetMapping("/sellers/sum-lower-than")
-    public List<SellerSummaryResponseDto> getSellersWithSumLowerThan(
+    public Page<SellerSummaryResponseDto> getSellersWithSumLowerThan(
             @RequestParam BigDecimal sum,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+            Pageable pageable
     ) {
         LocalDateTime fromDate = (startDate != null) ? startDate : LocalDateTime.MIN;
         LocalDateTime toDate = (endDate != null) ? endDate : LocalDateTime.MAX;
 
-        return analyticsService.getSellersWithSumLowerThanInPeriod(sum, fromDate, toDate);
+        return analyticsService.getSellersWithSumLowerThanInPeriod(sum, fromDate, toDate, pageable);
     }
 
     // * - Получить самое продуктивное время продавца

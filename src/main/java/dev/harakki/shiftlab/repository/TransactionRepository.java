@@ -21,9 +21,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
             WHERE t.transactionDate >= :startDate
               AND t.transactionDate <= :endDate
             GROUP BY t.seller
-            ORDER BY SUM(t.amount) DESC
+            ORDER BY SUM(t.amount) DESC, t.seller.id ASC
             """)
-    Optional<Seller> findFirstSellerInPeriodOrderByAmountDesc(
+    Optional<Seller> findFirstSellerInPeriodOrderByAmountDescSellerIdAsc(
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate
     );

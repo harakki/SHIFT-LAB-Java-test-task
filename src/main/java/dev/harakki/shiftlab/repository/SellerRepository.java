@@ -1,6 +1,7 @@
 package dev.harakki.shiftlab.repository;
 
 import dev.harakki.shiftlab.domain.Seller;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -23,7 +24,7 @@ public interface SellerRepository extends JpaRepository<Seller, Long>, JpaSpecif
             GROUP BY s
             HAVING COALESCE(SUM(t.amount), 0) < :thresholdAmount
             """)
-    List<Seller> findSellersWithTotalAmountLessThanInPeriod(
+    Page<Seller> findSellersWithTotalAmountLessThanInPeriod(
             @Param("thresholdAmount") BigDecimal thresholdAmount,
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate,

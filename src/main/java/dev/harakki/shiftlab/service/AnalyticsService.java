@@ -8,6 +8,8 @@ import dev.harakki.shiftlab.mapper.SellerMapper;
 import dev.harakki.shiftlab.repository.SellerRepository;
 import dev.harakki.shiftlab.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,16 +41,17 @@ public class AnalyticsService {
     }
 
     private SellerSummaryResponseDto getBestSellerForPeriod(LocalDateTime start, LocalDateTime end) {
-        return transactionRepository.findFirstSellerInPeriodOrderByAmountDesc(start, end)
+        return transactionRepository.findFirstSellerInPeriodOrderByAmountDescSellerIdAsc(start, end)
                 .map(sellerMapper::toSellerSummaryResponseDto)
                 .orElse(null); // Если транзакций не было, значит возвращаем null
     }
 
-    public List<SellerSummaryResponseDto> getSellersWithSumLowerThanInPeriod(BigDecimal sum, LocalDateTime startDate, LocalDateTime endDate) {
-        return sellerRepository.findSellersWithTotalAmountLessThanInPeriod(sum, startDate, endDate, null)
-                .stream()
-                .map(sellerMapper::toSellerSummaryResponseDto)
-                .toList();
+    public Page<SellerSummaryResponseDto> getSellersWithSumLowerThanInPeriod(BigDecimal sum,
+                                                                             LocalDateTime startDate,
+                                                                             LocalDateTime endDate,
+                                                                             Pageable pageable) {
+        return sellerRepository.findSellersWithTotalAmountLessThanInPeriod(sum, startDate, endDate, pageable)
+                .map(sellerMapper::toSellerSummaryResponseDto);
     }
 
     public BestSellingPeriodsResponseDto getMostProductiveTimeForSeller(Long sellerId) {

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SoftDelete;
+import org.hibernate.envers.Audited;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Builder
+@Audited // Аудит для отслеживания изменений в сущности, чтобы придерживаться принципов сохранения историчности данных
 @SoftDelete
 @NoArgsConstructor
 @AllArgsConstructor

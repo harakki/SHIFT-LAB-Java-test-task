@@ -1,7 +1,8 @@
 [versions]
 mapstruct = "1.6.3"
 lombok-mapstruct-binding = "0.2.0"
-hibernate-jpamodelgen = "7.2.6.Final"
+hibernate-processor = "7.2.7.Final"
+hibernate-envers = "7.2.7.Final"
 
 [libraries]
 # Mapping
@@ -10,4 +11,5 @@ mapstruct-processor = { group = "org.mapstruct", name = "mapstruct-processor", v
 lombok-mapstruct-binding = { group = "org.projectlombok", name = "lombok-mapstruct-binding", version.ref = "lombok-mapstruct-binding" }
 
 # Persistence
-hibernate-jpamodelgen = { group = "org.hibernate", name = "hibernate-jpamodelgen", version.ref = "hibernate-jpamodelgen" }
+hibernate-processor = { group = "org.hibernate.orm", name = "hibernate-processor", version.ref = "hibernate-processor" }
+hibernate-envers = { group = "org.hibernate.orm", name = "hibernate-envers", version.ref = "hibernate-envers" }

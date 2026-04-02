@@ -1,12 +1,17 @@
 package dev.harakki.shiftlab.service;
 
 import dev.harakki.shiftlab.dto.BestSellingPeriodsResponseDto;
+import dev.harakki.shiftlab.dto.PeriodBestSellerDto;
+import dev.harakki.shiftlab.dto.SellerSummaryResponseDto;
 import dev.harakki.shiftlab.exception.EntityNotFoundException;
+import dev.harakki.shiftlab.mapper.SellerMapper;
+import dev.harakki.shiftlab.repository.SellerRepository;
 import dev.harakki.shiftlab.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,7 +22,38 @@ public class AnalyticsService {
 
     private final SellerService sellerService;
 
+    private final SellerRepository sellerRepository;
     private final TransactionRepository transactionRepository;
+
+    private final SellerMapper sellerMapper;
+
+    public List<PeriodBestSellerDto> getMostProductiveSeller() {
+        LocalDateTime now = LocalDateTime.now();
+
+        return List.of(
+                new PeriodBestSellerDto(PeriodBestSellerDto.PeriodType.DAY, getBestSellerForPeriod(now.minusDays(1), now)),
+                new PeriodBestSellerDto(PeriodBestSellerDto.PeriodType.MONTH, getBestSellerForPeriod(now.minusMonths(1), now)),
+                new PeriodBestSellerDto(PeriodBestSellerDto.PeriodType.QUARTER, getBestSellerForPeriod(now.minusMonths(3), now)),
+                new PeriodBestSellerDto(PeriodBestSellerDto.PeriodType.YEAR, getBestSellerForPeriod(now.minusYears(1), now))
+        );
+    }
+
+    private SellerSummaryResponseDto getBestSellerForPeriod(LocalDateTime start, LocalDateTime end) {
+        return transactionRepository.findFirstSellerInPeriodOrderByAmountDesc(start, end)
+                .map(sellerMapper::toSellerSummaryResponseDto)
+                .orElse(null); // Если транзакций не было, значит возвращаем null
+    }
+
+    public List<SellerSummaryResponseDto> getSellersWithSumLowerThanInPeriod(BigDecimal sum, LocalDateTime startDate, LocalDateTime endDate) {
+        return sellerRepository.findSellersWithTotalAmountLessThanInPeriod(sum, startDate, endDate, null)
+                .stream()
+                .map(sellerMapper::toSellerSummaryResponseDto)
+                .toList();
+    }
+
+    public BestSellingPeriodsResponseDto getMostProductiveTimeForSeller(Long sellerId) {
+        return getBestSellingPeriodsForSeller(sellerId);
+    }
 
     public BestSellingPeriodsResponseDto getBestSellingPeriodsForSeller(Long sellerId) {
         if (sellerService.findSellerById(sellerId).isEmpty()) {

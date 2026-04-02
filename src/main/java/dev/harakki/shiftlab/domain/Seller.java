@@ -3,6 +3,7 @@ package dev.harakki.shiftlab.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SoftDelete;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Builder
+@SoftDelete
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "sellers")

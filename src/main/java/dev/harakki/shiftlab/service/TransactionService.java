@@ -9,6 +9,8 @@ import dev.harakki.shiftlab.mapper.TransactionMapper;
 import dev.harakki.shiftlab.repository.SellerRepository;
 import dev.harakki.shiftlab.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +26,8 @@ public class TransactionService {
 
     private final TransactionMapper transactionMapper;
 
-    public List<TransactionSummaryResponseDto> getAll() {
-        return transactionRepository.findAll().stream()
-                .map(transactionMapper::toTransactionSummaryResponseDto)
-                .toList();
+    public Page<TransactionSummaryResponseDto> getAll(Pageable pageable) {
+        return transactionRepository.findAll(pageable).map(transactionMapper::toTransactionSummaryResponseDto);
     }
 
     public TransactionDetailResponseDto get(Long transactionId) {
@@ -51,10 +51,9 @@ public class TransactionService {
         return transactionMapper.toTransactionDetailResponseDto(result);
     }
 
-    public List<TransactionSummaryResponseDto> getBySeller(Long sellerId) {
-        return transactionRepository.findBySellerId(sellerId).stream()
-                .map(transactionMapper::toTransactionSummaryResponseDto)
-                .toList();
+    public Page<TransactionSummaryResponseDto> getBySeller(Long sellerId, Pageable pageable) {
+        return transactionRepository.findBySellerId(sellerId, pageable)
+                .map(transactionMapper::toTransactionSummaryResponseDto);
     }
 
 }

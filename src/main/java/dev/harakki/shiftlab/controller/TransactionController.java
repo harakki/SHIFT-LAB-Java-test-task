@@ -4,10 +4,11 @@ import dev.harakki.shiftlab.dto.TransactionCreateDto;
 import dev.harakki.shiftlab.dto.TransactionDetailResponseDto;
 import dev.harakki.shiftlab.dto.TransactionSummaryResponseDto;
 import dev.harakki.shiftlab.service.TransactionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,8 +19,8 @@ public class TransactionController {
 
     // Получить список всех транзакций
     @GetMapping
-    public List<TransactionSummaryResponseDto> getAllTransactions() {
-        return transactionService.getAll();
+    public Page<TransactionSummaryResponseDto> getAllTransactions(Pageable pageable) {
+        return transactionService.getAll(pageable);
     }
 
     // Получить информацию о конкретной транзакции
@@ -30,14 +31,14 @@ public class TransactionController {
 
     // Создать новую транзакцию
     @PostMapping
-    public TransactionDetailResponseDto createTransaction(@RequestBody TransactionCreateDto request) {
+    public TransactionDetailResponseDto createTransaction(@Valid @RequestBody TransactionCreateDto request) {
         return transactionService.create(request);
     }
 
     // Получить все транзакции продавца
     @GetMapping("/sellers/{sellerId}")
-    public List<TransactionSummaryResponseDto> getTransactionsBySeller(@PathVariable Long sellerId) {
-        return transactionService.getBySeller(sellerId);
+    public Page<TransactionSummaryResponseDto> getTransactionsBySeller(@PathVariable Long sellerId, Pageable pageable) {
+        return transactionService.getBySeller(sellerId, pageable);
     }
 
 }

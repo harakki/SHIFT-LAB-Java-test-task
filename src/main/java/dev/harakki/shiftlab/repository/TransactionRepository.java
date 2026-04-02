@@ -2,6 +2,8 @@ package dev.harakki.shiftlab.repository;
 
 import dev.harakki.shiftlab.domain.Seller;
 import dev.harakki.shiftlab.domain.Transaction;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -29,6 +31,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
     @Query("SELECT t.transactionDate FROM Transaction t WHERE t.seller.id = :sellerId ORDER BY t.transactionDate ASC")
     List<LocalDateTime> findAllTransactionDatesBySellerIdOrderByTransactionDateAsc(Long sellerId);
 
-    List<Transaction> findBySellerId(Long sellerId);
+    Page<Transaction> findBySellerId(Long sellerId, Pageable pageable);
 
 }

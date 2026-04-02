@@ -9,12 +9,12 @@ import dev.harakki.shiftlab.exception.EntityNotFoundException;
 import dev.harakki.shiftlab.mapper.SellerMapper;
 import dev.harakki.shiftlab.repository.SellerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -28,8 +28,8 @@ public class SellerService {
         return sellerRepository.findById(sellerId);
     }
 
-    public List<SellerSummaryResponseDto> getAll() {
-        return sellerRepository.findAll().stream().map(sellerMapper::toSellerSummaryResponseDto).toList();
+    public Page<SellerSummaryResponseDto> getAll(Pageable pageable) {
+        return sellerRepository.findAll(pageable).map(sellerMapper::toSellerSummaryResponseDto);
     }
 
     public SellerDetailResponseDto get(Long sellerId) {

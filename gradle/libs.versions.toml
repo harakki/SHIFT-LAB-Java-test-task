@@ -1,0 +1,13 @@
+[versions]
+mapstruct = "1.6.3"
+lombok-mapstruct-binding = "0.2.0"
+hibernate-jpamodelgen = "7.2.6.Final"
+
+[libraries]
+# Mapping
+mapstruct = { group = "org.mapstruct", name = "mapstruct", version.ref = "mapstruct" }
+mapstruct-processor = { group = "org.mapstruct", name = "mapstruct-processor", version.ref = "mapstruct" }
+lombok-mapstruct-binding = { group = "org.projectlombok", name = "lombok-mapstruct-binding", version.ref = "lombok-mapstruct-binding" }
+
+# Persistence
+hibernate-jpamodelgen = { group = "org.hibernate", name = "hibernate-jpamodelgen", version.ref = "hibernate-jpamodelgen" }

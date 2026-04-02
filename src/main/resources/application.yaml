@@ -1,3 +1,6 @@
 spring:
   application:
     name: shift-lab
+  mvc:
+    problem-details:
+        enabled: true

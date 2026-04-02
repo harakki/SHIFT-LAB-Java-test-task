@@ -6,10 +6,8 @@ import java.time.LocalDateTime;
 /**
  * DTO for {@link dev.harakki.shiftlab.domain.Seller}
  */
-public record SellerResponseDto(
+public record SellerSummaryResponseDto(
         Long id,
-        String name,
-        String contactInfo,
-        LocalDateTime registrationDate
+        String name
 ) implements Serializable {
 }

@@ -2,7 +2,9 @@ package dev.harakki.shiftlab.mapper;
 
 import dev.harakki.shiftlab.domain.Seller;
 import dev.harakki.shiftlab.dto.SellerCreateDto;
-import dev.harakki.shiftlab.dto.SellerResponseDto;
+import dev.harakki.shiftlab.dto.SellerDetailResponseDto;
+import dev.harakki.shiftlab.dto.SellerSummaryResponseDto;
+import dev.harakki.shiftlab.dto.SellerUpdateDto;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
@@ -12,18 +14,17 @@ public interface SellerMapper {
 
     Seller toEntity(SellerCreateDto sellerCreateDto);
 
-    SellerCreateDto toDto(Seller seller);
+    // ### SellerDetailResponseDto ###
+
+    SellerDetailResponseDto toSellerDetailResponseDto(Seller seller);
+
+    // ### SellerSummaryResponseDto ###
+
+    SellerSummaryResponseDto toSellerSummaryResponseDto(Seller seller);
+
+    // ### SellerUpdateDto ###
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Seller partialUpdate(SellerCreateDto sellerCreateDto, @MappingTarget Seller seller);
-
-    // ### SellerResponseDto ###
-
-    Seller toEntity(SellerResponseDto sellerResponseDto);
-
-    SellerResponseDto toDto1(Seller seller);
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Seller partialUpdate(SellerResponseDto sellerResponseDto, @MappingTarget Seller seller);
+    Seller partialUpdate(SellerUpdateDto sellerUpdateDto, @MappingTarget Seller seller);
 
 }

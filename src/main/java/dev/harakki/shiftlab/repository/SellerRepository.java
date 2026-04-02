@@ -30,6 +30,4 @@ public interface SellerRepository extends JpaRepository<Seller, Long>, JpaSpecif
             Pageable pageable
     );
 
-    Optional<Seller> findSellerById(Long id);
-
 }

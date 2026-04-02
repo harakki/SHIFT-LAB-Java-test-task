@@ -10,11 +10,10 @@ import java.time.LocalDateTime;
 /**
  * DTO for {@link dev.harakki.shiftlab.domain.Transaction}
  */
-public record TransactionResponseDto(
+public record TransactionSummaryResponseDto(
         Long id,
-        Seller seller,
+        Long sellerId,
         BigDecimal amount,
-        PaymentType paymentType,
         LocalDateTime transactionDate
 ) implements Serializable {
 }

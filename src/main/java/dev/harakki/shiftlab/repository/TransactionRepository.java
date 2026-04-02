@@ -29,4 +29,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
     @Query("SELECT t.transactionDate FROM Transaction t WHERE t.seller.id = :sellerId ORDER BY t.transactionDate ASC")
     List<LocalDateTime> findAllTransactionDatesBySellerIdOrderByTransactionDateAsc(Long sellerId);
 
+    List<Transaction> findBySellerId(Long sellerId);
+
 }

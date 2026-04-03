@@ -11,14 +11,17 @@ public interface TransactionMapper {
 
     // ### TransactionCreateDto ###
 
+    @Mapping(target = "seller.id", source = "sellerId")
     Transaction toEntity(TransactionCreateDto transactionCreateDto);
 
     // ### TransactionDetailResponseDto ###
 
+    @Mapping(target = "sellerId", source = "seller.id")
     TransactionDetailResponseDto toTransactionDetailResponseDto(Transaction transaction);
 
     // ### TransactionSummaryResponseDto ###
 
+    @Mapping(target = "sellerId", source = "seller.id")
     TransactionSummaryResponseDto toTransactionSummaryResponseDto(Transaction transaction);
 
 }

@@ -4,3 +4,6 @@ spring:
   mvc:
     problem-details:
         enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update

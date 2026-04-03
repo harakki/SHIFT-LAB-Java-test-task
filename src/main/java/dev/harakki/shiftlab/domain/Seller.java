@@ -2,6 +2,7 @@ package dev.harakki.shiftlab.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SoftDelete;
 import org.hibernate.envers.Audited;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @Audited // Аудит для отслеживания изменений в сущности, чтобы придерживаться принципов сохранения историчности данных
 @SoftDelete
+@BatchSize(size = 20) // ПРи загрузке 100 транзакций будет 5 доп. запросов (каждый по 20) на продавца вместо 100
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "sellers")

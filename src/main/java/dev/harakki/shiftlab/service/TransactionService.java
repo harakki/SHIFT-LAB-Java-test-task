@@ -41,11 +41,7 @@ public class TransactionService {
         var seller = sellerRepository.findById(request.sellerId())
                 .orElseThrow(() -> new EntityNotFoundException("Seller with id " + request.sellerId() + " not found"));
 
-        var transaction = Transaction.builder()
-                .seller(seller)
-                .amount(request.amount())
-                .paymentType(request.paymentType())
-                .build();
+        var transaction = transactionMapper.toEntity(request);
 
         var result = transactionRepository.save(transaction);
         return transactionMapper.toTransactionDetailResponseDto(result);

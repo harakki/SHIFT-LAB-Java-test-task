@@ -19,8 +19,8 @@ public interface SellerRepository extends JpaRepository<Seller, Long>, JpaSpecif
             SELECT s
             FROM Seller s
                      LEFT JOIN Transaction t ON t.seller = s
-                AND t.transactionDate >= :startDate
-                AND t.transactionDate <= :endDate
+                AND (CAST(:startDate AS localdatetime) IS NULL OR t.transactionDate >= :startDate)
+                AND (CAST(:endDate AS localdatetime) IS NULL OR t.transactionDate <= :endDate)
             GROUP BY s
             HAVING COALESCE(SUM(t.amount), 0) < :thresholdAmount
             """)

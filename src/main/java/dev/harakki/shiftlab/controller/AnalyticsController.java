@@ -35,10 +35,7 @@ public class AnalyticsController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
             Pageable pageable
     ) {
-        LocalDateTime fromDate = (startDate != null) ? startDate : LocalDateTime.MIN;
-        LocalDateTime toDate = (endDate != null) ? endDate : LocalDateTime.MAX;
-
-        return analyticsService.getSellersWithSumLowerThanInPeriod(sum, fromDate, toDate, pageable);
+        return analyticsService.getSellersWithSumLowerThanInPeriod(sum, startDate, endDate, pageable);
     }
 
     // * - Получить самое продуктивное время продавца

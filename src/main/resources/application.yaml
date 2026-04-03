@@ -3,7 +3,10 @@ spring:
     name: shift-lab
   mvc:
     problem-details:
-        enabled: true
+      enabled: true
   jpa:
     hibernate:
       ddl-auto: update
+  docker:
+    compose:
+      file: src/main/docker/compose.yaml

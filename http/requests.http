@@ -1,0 +1,147 @@
+# ### SELLER ###
+
+### Создать продавца 1
+POST http://localhost:8080/api/v1/sellers
+Content-Type: application/json
+
+{
+  "name": "Продавец 1",
+  "contactInfo": "+7 999 999 9999"
+}
+
+> {%
+    client.global.set("seller_1_id", response.body.id);
+    console.log("Seller 1 ID saved: " + client.global.get("seller_1_id"));
+%}
+
+### Создать продавца 2
+POST http://localhost:8080/api/v1/sellers
+Content-Type: application/json
+
+{
+  "name": "Продавец 2",
+  "contactInfo": "+7 888 888 8888"
+}
+
+> {%
+    client.global.set("seller_2_id", response.body.id);
+    console.log("Seller 2 ID saved: " + client.global.get("seller_2_id"));
+%}
+
+### Создать продавца 3
+POST http://localhost:8080/api/v1/sellers
+Content-Type: application/json
+
+{
+  "name": "Продавец 3",
+  "contactInfo": "+7 555 555 5555"
+}
+
+> {%
+    client.global.set("seller_3_id", response.body.id);
+    console.log("Seller 3 ID saved: " + client.global.get("seller_3_id"));
+%}
+
+### Получить всех продавцов
+GET http://localhost:8080/api/v1/sellers
+
+### Получить продавца 1 по ID
+GET http://localhost:8080/api/v1/sellers/{{seller_1_id}}
+
+### Получить продавца 2 по ID
+GET http://localhost:8080/api/v1/sellers/{{seller_2_id}}
+
+### Изменить контактную информацию продавца 1
+PATCH http://localhost:8080/api/v1/sellers/{{seller_1_id}}
+Content-Type: application/json
+
+{
+  "contactInfo": "+7 777 777 7777"
+}
+
+### Получить продавца 1 по ID
+GET http://localhost:8080/api/v1/sellers/{{seller_1_id}}
+
+### Удалить продавца 2
+DELETE http://localhost:8080/api/v1/sellers/{{seller_2_id}}
+
+### Получить продавца 2 по ID
+GET http://localhost:8080/api/v1/sellers/{{seller_2_id}}
+
+# ### TRANSACTION ###
+
+### Создать транзакцию 1 продавца 1
+POST http://localhost:8080/api/v1/transactions
+Content-Type: application/json
+
+{
+  "sellerId": {{seller_1_id}},
+  "amount": 100.00,
+  "paymentType": "CASH"
+}
+
+> {%
+    client.global.set("transaction_1_seller_1_id", response.body.id);
+    console.log("Transaction 1 seller 1 ID saved: " + client.global.get("transaction_1_seller_1_id"));
+%}
+
+### Создать транзакцию 2 продавца 1
+POST http://localhost:8080/api/v1/transactions
+Content-Type: application/json
+
+{
+  "sellerId": {{seller_1_id}},
+  "amount": 1050.99,
+  "paymentType": "CASH"
+}
+
+### Создать транзакцию 1 продавца 3
+POST http://localhost:8080/api/v1/transactions
+Content-Type: application/json
+
+{
+  "sellerId": {{seller_3_id}},
+  "amount": 1.00,
+  "paymentType": "TRANSFER"
+}
+
+### Создать транзакцию 2 продавца 3
+POST http://localhost:8080/api/v1/transactions
+Content-Type: application/json
+
+{
+  "sellerId": {{seller_3_id}},
+  "amount": 10550.99,
+  "paymentType": "CARD"
+}
+
+### Создать транзакцию 3 продавца 3
+POST http://localhost:8080/api/v1/transactions
+Content-Type: application/json
+
+{
+  "sellerId": {{seller_3_id}},
+  "amount": 999.99,
+  "paymentType": "CARD"
+}
+
+### Получить все транзакции
+GET http://localhost:8080/api/v1/transactions
+
+### Получить все транзакции продавца 1
+GET http://localhost:8080/api/v1/transactions/sellers/{{seller_1_id}}
+
+### Получить транзакцию 1 продавца 1 по ID
+GET http://localhost:8080/api/v1/transactions/{{transaction_1_seller_1_id}}
+
+# ### ANALYTICS ###
+
+### Получить самого продуктивного продавца
+GET http://localhost:8080/api/v1/analytics/sellers/most-productive
+
+### Получить продавцов с наименьшей суммой транзакций за определенный период
+GET http://localhost:8080/api/v1/analytics/sellers/sum-lower-than?
+    sum=1000000
+
+### Получить самое продуктивное время для продавца 3
+GET http://localhost:8080/api/v1/analytics/sellers/{{seller_3_id}}/most-productive-time

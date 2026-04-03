@@ -1,6 +1,5 @@
 package dev.harakki.shiftlab.service;
 
-import dev.harakki.shiftlab.domain.Transaction;
 import dev.harakki.shiftlab.dto.TransactionCreateDto;
 import dev.harakki.shiftlab.dto.TransactionDetailResponseDto;
 import dev.harakki.shiftlab.dto.TransactionSummaryResponseDto;
@@ -13,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -38,7 +35,7 @@ public class TransactionService {
 
     @Transactional
     public TransactionDetailResponseDto create(TransactionCreateDto request) {
-        var seller = sellerRepository.findById(request.sellerId())
+        sellerRepository.findById(request.sellerId())
                 .orElseThrow(() -> new EntityNotFoundException("Seller with id " + request.sellerId() + " not found"));
 
         var transaction = transactionMapper.toEntity(request);

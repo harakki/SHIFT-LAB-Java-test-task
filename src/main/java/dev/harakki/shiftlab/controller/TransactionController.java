@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -31,6 +32,7 @@ public class TransactionController {
 
     // Создать новую транзакцию
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public TransactionDetailResponseDto createTransaction(@Valid @RequestBody TransactionCreateDto request) {
         return transactionService.create(request);
     }

@@ -14,6 +14,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Аналитические данные CRM
+ */
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/analytics")
@@ -21,13 +24,26 @@ public class AnalyticsController {
 
     private final AnalyticsService analyticsService;
 
-    // Получить самого продуктивного продавца
+    /**
+     * Получить самого продуктивного продавца
+     *
+     * @return Список с самыми продуктивными продавцами за последний день, месяц, квартал и год
+     * ({@link PeriodBestSellerDto})
+     */
     @GetMapping("/sellers/most-productive")
     public List<PeriodBestSellerDto> getMostProductiveSeller() {
         return analyticsService.getMostProductiveSeller();
     }
 
-    // Получить список продавцов с суммой меньше указанной
+    /**
+     * Получить продавцов с суммой транзакций меньше указанной за определенный период
+     *
+     * @param sum       Максимальная пороговая сумма
+     * @param startDate Начало периода для фильтрации транзакций
+     * @param endDate   Конец периода для фильтрации транзакций
+     * @param pageable  Настройки пагинации и сортировки
+     * @return Страница с краткой информацией по продавцам ({@link SellerSummaryResponseDto})
+     */
     @GetMapping("/sellers/sum-lower-than")
     public Page<SellerSummaryResponseDto> getSellersWithSumLowerThan(
             @RequestParam BigDecimal sum,
@@ -38,7 +54,13 @@ public class AnalyticsController {
         return analyticsService.getSellersWithSumLowerThanInPeriod(sum, startDate, endDate, pageable);
     }
 
-    // * - Получить самое продуктивное время продавца
+    /**
+     * Получить самое продуктивное время продавца
+     *
+     * @param sellerId Идентификатор продавца
+     * @return {@link BestSellingPeriodsResponseDto} - информация о наилучших периодах продаж для определенного продавца
+     * за день, неделю и месяц
+     */
     @GetMapping("/sellers/{sellerId}/most-productive-time")
     public BestSellingPeriodsResponseDto getMostProductiveTimeForSeller(@PathVariable Long sellerId) {
         return analyticsService.getMostProductiveTimeForSeller(sellerId);

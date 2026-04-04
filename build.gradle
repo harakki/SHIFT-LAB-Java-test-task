@@ -26,7 +26,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     implementation(libs.mapstruct)
     implementation(libs.hibernate.envers)
+    implementation(libs.springdoc.openapi.starter.webmvc.ui)
+    implementation(libs.therapi.runtime.javadoc)
     compileOnly 'org.projectlombok:lombok'
+    annotationProcessor(libs.therapi.runtime.javadoc.scribe)
     annotationProcessor(libs.hibernate.processor)
     annotationProcessor(libs.lombok.mapstruct.binding)
     annotationProcessor(libs.mapstruct.processor)

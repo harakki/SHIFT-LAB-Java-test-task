@@ -21,14 +21,15 @@
 - Spring Boot 4 (`actuator`, `data-jpa`, `validation`, `webmvc`)
 - PostgreSQL (runtime база данных)
 - Hibernate Processor + Hibernate Envers (аудит изменений продавцов для сохранения историчности данных)
-- MapStruct (для маппинга DTO и сущностей)
-- Lombok (для сокращения шаблонного кода)
+- MapStruct (маппинг DTO и сущностей)
+- Lombok (сокращение шаблонного кода)
+- springdoc-openapi + therapi-runtime-javadoc (генерация спецификации OpenAPI из кода и Javadoc)
 
 Тесты:
 
 - JUnit
-- Mockito (для мокирования зависимостей в юнит-тестах)
-- Testcontainers (`postgresql`, `junit-jupiter`) (для интеграционных тестов с настоящей базой данных)
+- Mockito (мокирование зависимостей в юнит-тестах)
+- Testcontainers (`postgresql`, `junit-jupiter`) (интеграционные тесты с инстансом базы данных)
 
 > См. конфигурации:
 >
@@ -89,7 +90,7 @@
 ./gradlew test
 ```
 
-> Также есть тесты для проверки работы сервиса через HTTP-клиент IntelliJ IDEA в директории `http/`.
+> Также есть Swagger UI, доступный по адресу `http://localhost:8080/swagger-ui.html` и тесты для проверки работы сервиса через HTTP-клиент IntelliJ IDEA в директории `http`.
 
 ## Примеры использования API
 
@@ -139,3 +140,5 @@ curl 'http://localhost:8080/api/v1/analytics/sellers/sum-lower-than?sum=1000000'
 ```bash
 curl 'http://localhost:8080/api/v1/analytics/sellers/most-productive'
 ```
+
+> Все запросы модно найти по адресу `http://localhost:8080/swagger-ui.html` в Swagger UI после запуска приложения.

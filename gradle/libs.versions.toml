@@ -3,6 +3,8 @@ mapstruct = "1.6.3"
 lombok-mapstruct-binding = "0.2.0"
 hibernate-processor = "7.2.7.Final"
 hibernate-envers = "7.2.7.Final"
+springdoc-openapi-starter = "3.0.2"
+therapi-runtime-javadoc = "0.15.0"
 
 [libraries]
 # Mapping
@@ -13,3 +15,8 @@ lombok-mapstruct-binding = { group = "org.projectlombok", name = "lombok-mapstru
 # Persistence
 hibernate-processor = { group = "org.hibernate.orm", name = "hibernate-processor", version.ref = "hibernate-processor" }
 hibernate-envers = { group = "org.hibernate.orm", name = "hibernate-envers", version.ref = "hibernate-envers" }
+
+# OpenAPI
+springdoc-openapi-starter-webmvc-ui = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc-openapi-starter" }
+therapi-runtime-javadoc-scribe = { group = "com.github.therapi", name = "therapi-runtime-javadoc-scribe", version.ref = "therapi-runtime-javadoc" }
+therapi-runtime-javadoc = { group = "com.github.therapi", name = "therapi-runtime-javadoc", version.ref = "therapi-runtime-javadoc" }
